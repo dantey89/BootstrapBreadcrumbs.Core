@@ -31,7 +31,7 @@ namespace BootstrapBreadcrumbs.Core.Attributes
         /// Area for generating a link
         /// </summary>
         public string ActionArea { get; set; }
-
+         
 
         public BreadcrumbsAttribute([CallerMemberName] string propertyName = null)
         {
@@ -46,7 +46,7 @@ namespace BootstrapBreadcrumbs.Core.Attributes
 
             if (propName == null)
             {
-                controller.ViewBag.BreadcrumbsController = new BreadcrumbsItem
+                controller.ViewBag.BreadcrumbsControllerItem = new BreadcrumbsItem
                 {
                     Area = this.ActionArea,
                     Controller = this.ActionController,
@@ -56,7 +56,7 @@ namespace BootstrapBreadcrumbs.Core.Attributes
             }
             else
             {
-                controller.ViewBag.BreadcrumbsAction = new BreadcrumbsItem
+                controller.ViewBag.BreadcrumbsActionItem = new BreadcrumbsItem
                 {
                     Area = this.ActionArea,
                     Controller = this.ActionController,

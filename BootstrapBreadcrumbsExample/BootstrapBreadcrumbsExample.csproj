@@ -13,7 +13,7 @@
     <ProjectReference Include="..\BootstrapBreadcrumbs.Core\BootstrapBreadcrumbs.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Shop\Data\" />
+    <Folder Include="Areas\Shop\Models\" />
   </ItemGroup>
 </Project>

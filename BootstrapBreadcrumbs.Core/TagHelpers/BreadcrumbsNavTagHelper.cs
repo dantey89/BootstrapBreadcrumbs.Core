@@ -39,7 +39,7 @@ namespace BootstrapBreadcrumbs.Core.TagHelpers
 
         private IEnumerable<BreadcrumbsItem> SuffixItems => ViewContext.ViewBag.BreadcrumbsSuffixItems as IEnumerable<BreadcrumbsItem>;
 
-        private IEnumerable<BreadcrumbsItem> PrefixItems => ViewContext.ViewBag.BreadcrumbsSuffixItems as IEnumerable<BreadcrumbsItem>;
+        private IEnumerable<BreadcrumbsItem> PrefixItems => ViewContext.ViewBag.BreadcrumbsPrefix as IEnumerable<BreadcrumbsItem>;
 
 
 
@@ -119,7 +119,7 @@ namespace BootstrapBreadcrumbs.Core.TagHelpers
             //Controller item the only one. Make it active and quit
             if (PrefixItems == null && ActionItem == null && SuffixItems == null)
             {
-                controllerLiTag.Attributes.Add("class", "active");
+                controllerLiTag.Attributes["class"] = $"{controllerLiTag.Attributes["class"]} active";
                 controllerLiTag.InnerHtml.AppendHtml(ControllerItem.Title);
                 return controllerLiTag;
             }
@@ -149,7 +149,7 @@ namespace BootstrapBreadcrumbs.Core.TagHelpers
 
                 if (i + 1 == items.Count && lastInChain)
                 {
-                    prefixLiTag.Attributes.Add("class", "active");
+                    prefixLiTag.Attributes["class"] = $"{prefixLiTag.Attributes["class"]} active";
                     prefixLiTag.InnerHtml.AppendHtml(items[i].Title);
                 }
                 else
@@ -173,9 +173,9 @@ namespace BootstrapBreadcrumbs.Core.TagHelpers
             TagBuilder actionLiTag = new TagBuilder("li");
             actionLiTag.Attributes.Add("class", "breadcrumb-item");
 
-            if (SuffixItems != null)
+            if (SuffixItems == null)
             {
-                actionLiTag.Attributes.Add("class", "active");
+                actionLiTag.Attributes["class"] = $"{actionLiTag.Attributes["class"]} active"; 
                 actionLiTag.InnerHtml.AppendHtml(ActionItem.Title);
             }
             else
@@ -203,7 +203,7 @@ namespace BootstrapBreadcrumbs.Core.TagHelpers
 
                 if (i + 1 == items.Count)
                 {
-                    liTag.Attributes.Add("class", "active");
+                    liTag.Attributes["class"] = $"{liTag.Attributes["class"]} active";
                     liTag.InnerHtml.AppendHtml(items[i].Title);
                 }
                 else
