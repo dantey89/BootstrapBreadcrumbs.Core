@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using BootstrapBreadcrumbs.Core.Models;
+using BootstrapBreadcrumbs.Core.Manager;
 using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -33,13 +30,13 @@ namespace BootstrapBreadcrumbs.Core.TagHelpers
 
         public string HomeTitle { get; set; }
 
-        private BreadcrumbsItem ControllerItem => ViewContext.ViewBag.BreadcrumbsControllerItem as BreadcrumbsItem;
+        private BreadcrumbsItem ControllerItem => ViewContext.ViewData.GetControllerBreadcrumb();
 
-        private BreadcrumbsItem ActionItem => ViewContext.ViewBag.BreadcrumbsActionItem as BreadcrumbsItem;
+        private BreadcrumbsItem ActionItem => ViewContext.ViewData.GetActionBreadcrumb();
 
-        private IEnumerable<BreadcrumbsItem> SuffixItems => ViewContext.ViewBag.BreadcrumbsSuffixItems as IEnumerable<BreadcrumbsItem>;
+        private IEnumerable<BreadcrumbsItem> SuffixItems => ViewContext.ViewData.GetSuffixBreadcrumbs();
 
-        private IEnumerable<BreadcrumbsItem> PrefixItems => ViewContext.ViewBag.BreadcrumbsPrefix as IEnumerable<BreadcrumbsItem>;
+        private IEnumerable<BreadcrumbsItem> PrefixItems => ViewContext.ViewData.GetPrefixBreadcrumbs();
 
 
 

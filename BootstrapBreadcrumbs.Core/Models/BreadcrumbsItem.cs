@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BootstrapBreadcrumbs.Core.Models
+﻿namespace BootstrapBreadcrumbs.Core
 {
     public class BreadcrumbsItem
     {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BootstrapBreadcrumbs.Core.Attributes;
+﻿using BootstrapBreadcrumbs.Core;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BootstrapBreadcrumbsExample.Controllers

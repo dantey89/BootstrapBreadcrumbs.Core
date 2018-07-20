@@ -1,7 +1,29 @@
-﻿
+﻿@model string
 @{
     ViewData["Title"] = "Catalog";
 }
 
 <h2>Shop catalog - @( ViewBag.CatalogName ?? "root" )</h2>
 
+@if (Model == null)
+{
+<ul>
+    <li>
+        <a asp-action="Index" asp-controller="Catalog" asp-route-category="Mobile phones" >Mobile phones</a>
+    </li>
+    <li>
+        <a asp-action="Index" asp-controller="Catalog" asp-route-category="Microwave ovens">Microwave ovens</a>
+    </li>
+</ul>
+}
+else
+{
+    <ul>
+        <li>
+            <a asp-action="Details" asp-controller="Catalog" asp-route-category="@Model" asp-route-product="LG product">LG product</a>
+        </li>
+        <li>
+            <a asp-action="Details" asp-controller="Catalog" asp-route-category="@Model" asp-route-product="Samsung product">Samsung product</a>
+        </li>
+    </ul>
+}

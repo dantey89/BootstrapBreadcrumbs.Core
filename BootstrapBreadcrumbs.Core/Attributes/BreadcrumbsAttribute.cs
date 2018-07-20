@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text;
-using BootstrapBreadcrumbs.Core.Models;
+﻿using System.Runtime.CompilerServices;
+using BootstrapBreadcrumbs.Core.Manager;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace BootstrapBreadcrumbs.Core.Attributes
+namespace BootstrapBreadcrumbs.Core
 {
     public class BreadcrumbsAttribute : ActionFilterAttribute
     {
-        private readonly string propName;
+        private readonly string _propName;
 
         /// <summary>
         /// Text to display at breadcrumbs
@@ -20,53 +17,54 @@ namespace BootstrapBreadcrumbs.Core.Attributes
         /// <summary>
         /// Controller for generating a link
         /// </summary>
-        public string ActionController { get; set; }
+        public string Controller { get; set; }
 
         /// <summary>
         /// Action for generating a link
         /// </summary>
-        public string ActionMethod { get; set; }
+        public string Action { get; set; }
 
         /// <summary>
         /// Area for generating a link
         /// </summary>
-        public string ActionArea { get; set; }
+        public string Area { get; set; }
          
 
         public BreadcrumbsAttribute([CallerMemberName] string propertyName = null)
         {
-            this.propName = propertyName;
+            this._propName = propertyName;
         }
 
 
 
-        public override void OnActionExecuted(ActionExecutedContext context)
+        public override void OnActionExecuting(ActionExecutingContext context)
         {
             var controller = context.Controller as Controller;
 
-            if (propName == null)
+            //is action attribute?
+            if (_propName == null)
             {
-                controller.ViewBag.BreadcrumbsControllerItem = new BreadcrumbsItem
+                controller.ViewData.SetControllerBreadcrumb(new BreadcrumbsItem
                 {
-                    Area = this.ActionArea,
-                    Controller = this.ActionController,
-                    Action = this.ActionMethod,
+                    Area = this.Area,
+                    Controller = this.Controller,
+                    Action = this.Action,
                     Title = this.Title
-                };
+                });
             }
             else
             {
-                controller.ViewBag.BreadcrumbsActionItem = new BreadcrumbsItem
+                controller.ViewData.SetActionBreadcrumb(new BreadcrumbsItem
                 {
-                    Area = this.ActionArea,
-                    Controller = this.ActionController,
-                    Action = this.ActionMethod,
+                    Area = this.Area,
+                    Controller = this.Controller,
+                    Action = this.Action,
                     Title = (this.Title == "ViewBag") ? controller.ViewBag.BreadcrumbsTitle : this.Title
-                };
+                });
 
             }
 
-            base.OnActionExecuted(context);
+            base.OnActionExecuting(context);
         }
 
 
