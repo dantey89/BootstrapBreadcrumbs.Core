@@ -25,7 +25,9 @@ namespace BootstrapBreadcrumbsExample.Areas.Shop.Controllers
             {
                 Title = category,
                 Action = "Index",
-                Controller = "Catalog"
+                Area = "Shop",
+                Controller = "Catalog",
+                RouteValues = new { category }
             }});
 
             this.SetBreadcrumbAction(new BreadcrumbsItem

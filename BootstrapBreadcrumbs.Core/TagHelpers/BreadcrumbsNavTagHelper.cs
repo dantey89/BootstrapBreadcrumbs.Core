@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BootstrapBreadcrumbs.Core.Extentions;
 using BootstrapBreadcrumbs.Core.Manager;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -8,8 +9,6 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace BootstrapBreadcrumbs.Core.TagHelpers
 {
-
-#warning Add route object support
 
     public class BreadcrumbsNavTagHelper : TagHelper
     {
@@ -29,6 +28,8 @@ namespace BootstrapBreadcrumbs.Core.TagHelpers
         public string HomeAction { get; set; }
 
         public string HomeTitle { get; set; }
+
+        public object RouteValues { get; set; }
 
         private BreadcrumbsItem ControllerItem => ViewContext.ViewData.GetControllerBreadcrumb();
 
@@ -85,7 +86,7 @@ namespace BootstrapBreadcrumbs.Core.TagHelpers
 
             TagBuilder homeHref = null;
             string homeTitle = HomeTitle ?? "Home";
-
+            object routeValues = RouteValues ?? new { Area = HomeArea };
 
             if (string.IsNullOrEmpty(HomeAction))
             {
@@ -94,8 +95,8 @@ namespace BootstrapBreadcrumbs.Core.TagHelpers
                 homeHref.InnerHtml.Append(homeTitle);
             }
             else
-            {
-                homeHref = _generator.GenerateActionLink(ViewContext, homeTitle, HomeAction, HomeController, null, null, null, new { Area = HomeArea }, null);
+            {                
+                homeHref = _generator.GenerateActionLink(ViewContext, homeTitle, HomeAction, HomeController, null, null, null, routeValues , null);
             }
 
             homeLi.InnerHtml.AppendHtml(homeHref);
@@ -122,7 +123,8 @@ namespace BootstrapBreadcrumbs.Core.TagHelpers
             }
             else
             {
-                var controllerHref = _generator.GenerateActionLink(ViewContext, ControllerItem.Title, ControllerItem.Action, ControllerItem.Controller, null, null, null, new { Area = ControllerItem.Area }, null);
+                object routeValues = ControllerItem.RouteValues == null ? new { Area = ControllerItem.Area } : ControllerItem.RouteValues.AddProperty("Area", ControllerItem.Area) as object;
+                var controllerHref = _generator.GenerateActionLink(ViewContext, ControllerItem.Title, ControllerItem.Action, ControllerItem.Controller, null, null, null, routeValues, null);
                 controllerLiTag.InnerHtml.AppendHtml(controllerHref);
             }
 
@@ -151,7 +153,8 @@ namespace BootstrapBreadcrumbs.Core.TagHelpers
                 }
                 else
                 {
-                    TagBuilder prefixItemHref = _generator.GenerateActionLink(ViewContext, items[i].Title, items[i].Action, items[i].Controller, null, null, null, new { Area = items[i].Area }, null);
+                    object routeValues = items[i].RouteValues == null ? new { Area = items[i].Area } : items[i].RouteValues.AddProperty("Area", items[i].Area) as object;
+                    TagBuilder prefixItemHref = _generator.GenerateActionLink(ViewContext, items[i].Title, items[i].Action, items[i].Controller, null, null, null, routeValues, null);
                     prefixLiTag.InnerHtml.AppendHtml(prefixItemHref);
                 }
 
@@ -177,7 +180,8 @@ namespace BootstrapBreadcrumbs.Core.TagHelpers
             }
             else
             {
-                TagBuilder actionLink = _generator.GenerateActionLink(ViewContext, ActionItem.Title, ActionItem.Action, ActionItem.Controller, null, null, null, new { Area = ActionItem.Area }, null);
+                object routeValues = ActionItem.RouteValues == null ? new { Area = ActionItem.Area } : ActionItem.RouteValues.AddProperty("Area", ActionItem.Area) as object;
+                TagBuilder actionLink = _generator.GenerateActionLink(ViewContext, ActionItem.Title, ActionItem.Action, ActionItem.Controller, null, null, null, routeValues, null);
                 actionLiTag.InnerHtml.AppendHtml(actionLink);
             }
 
@@ -205,6 +209,7 @@ namespace BootstrapBreadcrumbs.Core.TagHelpers
                 }
                 else
                 {
+                    object routeValues = items[i].RouteValues == null ? new { Area = items[i].Area } : items[i].RouteValues.AddProperty("Area", items[i].Area) as object;
                     TagBuilder suffixItemHref = _generator.GenerateActionLink(ViewContext, items[i].Title, items[i].Action, items[i].Controller, null, null, null, new { Area = items[i].Area }, null);
                     liTag.InnerHtml.AppendHtml(suffixItemHref);
                 }
