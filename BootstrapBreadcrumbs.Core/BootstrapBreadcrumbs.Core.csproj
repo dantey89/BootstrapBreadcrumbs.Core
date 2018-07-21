@@ -2,6 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Dantey</Authors>
+    <NeutralLanguage>en</NeutralLanguage>
+    <Description>Bootstrap 3 integration of breadcrumbs for Asp.Net Core project.</Description>
+    <RepositoryUrl>https://github.com/dantey89/BootstrapBreadcrumbs.Core</RepositoryUrl>
+    <PackageTags>Bootstrap 3 Breadcrumbs, AspNet Core Breadcrumbs</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
