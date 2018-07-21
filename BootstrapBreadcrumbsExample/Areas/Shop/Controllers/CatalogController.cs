@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BootstrapBreadcrumbsExample.Areas.Shop.Controllers
 {
     [Area("Shop")]
-    [Breadcrumbs(Title = "Root category", Controller = "Catalog", Action = "Index", Area = "Shop")]
+    [Breadcrumbs(Title = "ShopTitle", TitleSource = typeof(Resources.Localize), Controller = "Catalog", Action = "Index", Area = "Shop")]
     public class CatalogController : Controller
     {
         public IActionResult Index(string category)

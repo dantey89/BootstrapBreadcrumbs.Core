@@ -8,4 +8,10 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Microsoft.ApplicationInsights.AspNetCore">
+      <HintPath>..\..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.applicationinsights.aspnetcore\2.1.1\lib\netstandard1.6\Microsoft.ApplicationInsights.AspNetCore.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

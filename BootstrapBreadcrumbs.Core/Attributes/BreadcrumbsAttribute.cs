@@ -1,5 +1,9 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Reflection;
+using System.Resources;
+using System.Runtime.CompilerServices;
 using BootstrapBreadcrumbs.Core.Manager;
+using Microsoft.ApplicationInsights.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -10,9 +14,19 @@ namespace BootstrapBreadcrumbs.Core
         private readonly string _propName;
 
         /// <summary>
-        /// Text to display at breadcrumbs
+        /// Localization source file. Use Title to set key.
         /// </summary>
-        public string Title { get; set; }
+        public Type TitleSource { get; set; }
+
+        /// <summary>
+        /// Text to display at breadcrumbs. If TitleSource defined, it will search for this key.
+        /// </summary>
+        public string Title
+        {
+            get => (TitleSource == null) ? _title : new ResourceManager(TitleSource).GetString(_title);
+            set { _title = value; }
+        }
+        private string _title;
 
         /// <summary>
         /// Controller for generating a link
@@ -28,7 +42,7 @@ namespace BootstrapBreadcrumbs.Core
         /// Area for generating a link
         /// </summary>
         public string Area { get; set; }
-         
+
 
         public BreadcrumbsAttribute([CallerMemberName] string propertyName = null)
         {
